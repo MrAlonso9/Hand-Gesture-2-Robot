@@ -1,0 +1,19 @@
+    labels = {
+        "0": "rotate anticlockwise", 
+        "1": "increase", 
+        "2": "release", 
+        "3": "switch", 
+        "4": "look up", 
+        "5": "Terminate", 
+        "6": "decrease", 
+        "7": "move backward", 
+        "8": "point", 
+        "9": "rotate clockwise", 
+        "10": "grasp", 
+        "11": "pause", 
+        "12": "move forward", 
+        "13": "Confirm", 
+        "14": "look down", 
+        "15": "move left", 
+        "16": "move right"
+    }
